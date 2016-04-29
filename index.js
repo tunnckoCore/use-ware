@@ -9,12 +9,13 @@
 
 var utils = require('./utils')
 
-module.exports = function useWare (app) {
+module.exports = function useWare (app, prop) {
   if (!utils.isObject(app) && typeof app !== 'function') {
     return app
   }
-  if (!utils.isArray(app.____plugins)) {
-    utils.define(app, '____plugins', [])
+  prop = typeof prop === 'string' && prop.length > 0 ? prop : 'plugins'
+  if (!utils.isArray(app[prop])) {
+    utils.define(app, prop, [])
   }
 
   utils.define(app, 'use', function use (fn) {
@@ -25,19 +26,21 @@ module.exports = function useWare (app) {
     fn = fn.call(self, self)
 
     if (typeof fn === 'function') {
-      self.____plugins.push(fn)
+      self[prop].push(fn)
     }
     return self
   })
 
   utils.define(app, 'run', function run () {
     var self = this || app
-    var len = self.____plugins.length
+    var len = self[prop].length
     var i = 0
 
     while (i < len) {
-      self.____plugins[i++].apply(self, arguments)
+      self[prop][i++].apply(self, arguments)
     }
     return self
   })
+
+  return app
 }
