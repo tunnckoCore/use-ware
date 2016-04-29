@@ -1,0 +1,73 @@
+{
+  "name": "use-ware",
+  "version": "0.1.0",
+  "description": "Adds sync plugin support to your application. Kinda fork of [use][] - use it if you need to support nesting. Or use [ware][] if you need async middleware system.",
+  "repository": "tunnckoCore/use-ware",
+  "author": "Charlike Mike Reagent <@tunnckoCore> (http://www.tunnckocore.tk)",
+  "precommit.silent": true,
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "test": "standard && node test.js"
+  },
+  "dependencies": {
+    "define-property": "^0.2.5",
+    "isarray": "^1.0.0",
+    "isobject": "^2.1.0",
+    "lazy-cache": "^2.0.0"
+  },
+  "devDependencies": {
+    "assertit": "^0.1.0",
+    "pre-commit": "*"
+  },
+  "files": [
+    "index.js",
+    "utils.js"
+  ],
+  "keywords": [
+    "app",
+    "application",
+    "fns",
+    "fork",
+    "middleware",
+    "plugin",
+    "plugins",
+    "sync",
+    "use",
+    "use-ware",
+    "ware"
+  ],
+  "verb": {
+    "run": true,
+    "toc": false,
+    "layout": "empty",
+    "tasks": [
+      "readme"
+    ],
+    "related": {
+      "list": [
+        "use",
+        "useware",
+        "useware-context",
+        "ware",
+        "composition",
+        "lazy-utils",
+        "lazy-arrayify",
+        "lazy-cache"
+      ]
+    },
+    "reflinks": [
+      "use",
+      "ware",
+      "lazy-cache",
+      "browserify",
+      "extend-shallow",
+      "isobject",
+      "is-extendable",
+      "useware"
+    ],
+    "lint": {
+      "reflinks": true
+    }
+  }
+}
