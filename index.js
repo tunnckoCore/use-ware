@@ -11,7 +11,7 @@ var utils = require('./utils')
 
 module.exports = function useWare (app, prop) {
   if (!utils.isObject(app) && typeof app !== 'function') {
-    return app
+    throw new TypeError('useWare: expect `app` be an object or function')
   }
   prop = typeof prop === 'string' && prop.length > 0 ? prop : 'plugins'
   if (!utils.isArray(app[prop])) {

@@ -129,12 +129,6 @@ test('should `.run` accept any number and any kind of arguments', function (done
   done()
 })
 
-test('should return the `app` if not an object or function', function (done) {
-  var res = use(123)
-  test.strictEqual(res, 123)
-  done()
-})
-
 test('should throw TypeError if not a function passed to `.use`', function (done) {
   var app = use({})
   function fixture () {
@@ -142,6 +136,15 @@ test('should throw TypeError if not a function passed to `.use`', function (done
   }
   test.throws(fixture, TypeError)
   test.throws(fixture, /expect `fn` be function/)
+  done()
+})
+
+test('should throw TypeError if `app` not an object or function', function (done) {
+  function fixture () {
+    use(123)
+  }
+  test.throws(fixture, TypeError)
+  test.throws(fixture, /expect `app` be an object or function/)
   done()
 })
 
