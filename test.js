@@ -16,10 +16,11 @@ test('should export a function', function (done) {
   done()
 })
 
-test('should decorate "use" onto the given object', function (done) {
+test('should decorate "use" and "run" onto the given object', function (done) {
   var app = {}
   use(app)
   test.strictEqual(typeof app.use, 'function')
+  test.strictEqual(typeof app.run, 'function')
   done()
 })
 
@@ -27,13 +28,6 @@ test('should decorate "plugins" onto the given object', function (done) {
   var app = {}
   use(app)
   test.strictEqual(isArray(app.plugins), true)
-  done()
-})
-
-test('should decorate "run" onto the given object', function (done) {
-  var app = {}
-  use(app)
-  test.strictEqual(typeof app.run, 'function')
   done()
 })
 
