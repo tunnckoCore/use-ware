@@ -1,6 +1,6 @@
 {
   "name": "use-ware",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Adds sync plugin support to your application. Kinda fork of [use][] - use it if you need to support nesting. Or use [ware][] if you need async middleware system.",
   "repository": "tunnckoCore/use-ware",
   "author": "Charlike Mike Reagent <@tunnckoCore> (http://www.tunnckocore.tk)",
