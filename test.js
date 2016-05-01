@@ -208,3 +208,25 @@ test('should allow passing `opts.fn` to merge options from each plugin to app op
 
   done()
 })
+
+test('should not extend options if `opts.fn` not given (#3)', function (done) {
+  var limon = {options: {
+    foo: 'bar'
+  }}
+  use(limon)
+
+  limon
+    .use(function () {
+      test.strictEqual(this.options.foo, 'bar')
+      test.strictEqual(this.options.xxx, undefined)
+      test.strictEqual(this.options.qux, undefined)
+    }, { xxx: 'yyy' })
+    .use(function () {
+      test.strictEqual(this.options.foo, 'bar')
+      test.strictEqual(this.options.xxx, undefined)
+      test.strictEqual(this.options.qux, undefined)
+      test.strictEqual(this.options.ccc, undefined)
+    }, { ccc: 'ddd' })
+
+  done()
+})
