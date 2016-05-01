@@ -143,7 +143,7 @@ test('should throw TypeError if `app` not an object or function', function (done
 })
 
 test('should be able to customize property on which will write the plugins', function (done) {
-  var app = use({}, 'abc')
+  var app = use({}, {prop: 'abc'})
   app.use(function () {
     return function () {}
   })
@@ -156,7 +156,7 @@ test('should be able to customize property on which will write the plugins', fun
 
 test('should work to pass function as `app`', function (done) {
   function myApp () {}
-  use(myApp, '_plugins')
+  use(myApp, {prop: '_plugins'})
   myApp.use(function (fn) {
     test.strictEqual(typeof fn, 'function')
     test.strictEqual(typeof this, 'function')

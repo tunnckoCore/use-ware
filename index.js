@@ -9,35 +9,44 @@
 
 var lazy = require('./utils')
 
-module.exports = function useWare (app, prop) {
+module.exports = function useWare (app, opts) {
   if (!lazy.utils.isObject(app) && typeof app !== 'function') {
     throw new TypeError('useWare: expect `app` be an object or function')
   }
-  prop = typeof prop === 'string' && prop.length > 0 ? prop : 'plugins'
-  if (!lazy.utils.isArray(app[prop])) {
-    lazy.define(app, prop, [])
+  opts = lazy.utils.isObject(opts) ? opts : {}
+  opts = lazy.utils.extend({
+    prop: 'plugins'
+  }, opts)
+  opts.prop = typeof opts.prop === 'string' ? opts.prop : 'plugins'
+  opts.prop = opts.prop.length > 0 ? opts.prop : 'plugins'
+
+  if (!lazy.utils.isArray(app[opts.prop])) {
+    lazy.define(app, opts.prop, [])
   }
 
-  lazy.define(app, 'use', function use (fn) {
+  lazy.define(app, 'use', function use (fn, options) {
     if (typeof fn !== 'function') {
       throw new TypeError('useWare.use: expect `fn` be function')
     }
     var self = this || app
+    if (typeof opts.fn === 'function') {
+      opts.fn.call(self, self, options)
+    }
     fn = fn.call(self, self)
 
     if (typeof fn === 'function') {
-      self[prop].push(fn)
+      self[opts.prop].push(fn)
     }
     return self
   })
 
   lazy.define(app, 'run', function run () {
     var self = this || app
-    var len = self[prop].length
+    var len = self[opts.prop].length
     var i = 0
 
     while (i < len) {
-      self[prop][i++].apply(self, arguments)
+      self[opts.prop][i++].apply(self, arguments)
     }
     return self
   })
