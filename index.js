@@ -7,18 +7,18 @@
 
 'use strict'
 
-var utils = require('./utils')
+var lazy = require('./utils')
 
 module.exports = function useWare (app, prop) {
-  if (!utils.isObject(app) && typeof app !== 'function') {
+  if (!lazy.utils.isObject(app) && typeof app !== 'function') {
     throw new TypeError('useWare: expect `app` be an object or function')
   }
   prop = typeof prop === 'string' && prop.length > 0 ? prop : 'plugins'
-  if (!utils.isArray(app[prop])) {
-    utils.define(app, prop, [])
+  if (!lazy.utils.isArray(app[prop])) {
+    lazy.define(app, prop, [])
   }
 
-  utils.define(app, 'use', function use (fn) {
+  lazy.define(app, 'use', function use (fn) {
     if (typeof fn !== 'function') {
       throw new TypeError('useWare.use: expect `fn` be function')
     }
@@ -31,7 +31,7 @@ module.exports = function useWare (app, prop) {
     return self
   })
 
-  utils.define(app, 'run', function run () {
+  lazy.define(app, 'run', function run () {
     var self = this || app
     var len = self[prop].length
     var i = 0

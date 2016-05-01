@@ -25,8 +25,7 @@ require = utils // eslint-disable-line no-undef, no-native-reassign
  */
 
 require('define-property', 'define')
-require('isarray', 'isArray')
-require('isobject', 'isObject')
+require('lazy-utils', 'utils')
 
 /**
  * Restore `require`

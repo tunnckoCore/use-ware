@@ -12,9 +12,8 @@
   },
   "dependencies": {
     "define-property": "^0.2.5",
-    "isarray": "^1.0.0",
-    "isobject": "^2.1.0",
-    "lazy-cache": "^2.0.0"
+    "lazy-cache": "^2.0.0",
+    "lazy-utils": "^1.0.0"
   },
   "devDependencies": {
     "assertit": "^0.1.0",

@@ -9,7 +9,7 @@
 
 var test = require('assertit')
 var use = require('./index')
-var isArray = require('isarray')
+var isArray = require('./utils').utils.isArray
 
 test('should export a function', function (done) {
   test.strictEqual(typeof use, 'function')
