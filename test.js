@@ -9,7 +9,7 @@
 
 var test = require('assertit')
 var use = require('./index')
-var isArray = require('./utils').utils.isArray
+var utils = require('./utils').utils
 
 test('should export a function', function (done) {
   test.strictEqual(typeof use, 'function')
@@ -27,7 +27,7 @@ test('should decorate "use" and "run" onto the given object', function (done) {
 test('should decorate "plugins" onto the given object', function (done) {
   var app = {}
   use(app)
-  test.strictEqual(isArray(app.plugins), true)
+  test.strictEqual(utils.isArray(app.plugins), true)
   done()
 })
 
@@ -45,7 +45,7 @@ test('should exported function return app', function (done) {
 test('should not re-add decorate methods onto the given object', function (done) {
   var app = {}
   use(app)
-  test.strictEqual(isArray(app.plugins), true)
+  test.strictEqual(utils.isArray(app.plugins), true)
   test.strictEqual(app.plugins.length, 0)
   app.use(function () {
     return function () {}
@@ -178,5 +178,33 @@ test('should work to pass function as `app`', function (done) {
   test.strictEqual(myApp.e, 'f')
   test.strictEqual(myApp.g, 'h')
   test.deepEqual(myApp.state, [1, 2, 3])
+  done()
+})
+
+test('should allow passing `opts.fn` to merge options from each plugin to app options (#3)', function (done) {
+  var limon = {options: {
+    foo: 'bar'
+  }}
+  use(limon, {
+    fn: function (app, options) {
+      test.strictEqual(this.options.foo, 'bar')
+      this.options = utils.extend(this.options, options)
+      this.options.qux = 123
+    }
+  })
+
+  limon
+    .use(function () {
+      test.strictEqual(this.options.foo, 'bar')
+      test.strictEqual(this.options.xxx, 'yyy')
+      test.strictEqual(this.options.qux, 123)
+    }, { xxx: 'yyy' })
+    .use(function () {
+      test.strictEqual(this.options.foo, 'bar')
+      test.strictEqual(this.options.xxx, 'yyy')
+      test.strictEqual(this.options.qux, 123)
+      test.strictEqual(this.options.ccc, 'ddd')
+    }, { ccc: 'ddd' })
+
   done()
 })
