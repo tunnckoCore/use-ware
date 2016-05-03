@@ -9,7 +9,8 @@
 
 var test = require('assertit')
 var use = require('./index')
-var utils = require('./utils').utils
+var utils = require('./utils')
+var extend = require('extend-shallow')
 
 test('should export a function', function (done) {
   test.strictEqual(typeof use, 'function')
@@ -188,7 +189,7 @@ test('should allow passing `opts.fn` to merge options from each plugin to app op
   use(limon, {
     fn: function (app, options) {
       test.strictEqual(this.options.foo, 'bar')
-      this.options = utils.extend(this.options, options)
+      this.options = extend(this.options, options)
       this.options.qux = 123
     }
   })
