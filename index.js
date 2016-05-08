@@ -13,6 +13,7 @@ module.exports = function useWare (app, opts) {
   if (!utils.isObject(app) && typeof app !== 'function') {
     throw new TypeError('useWare: expect `app` be an object or function')
   }
+
   opts = utils.isObject(opts) ? opts : {}
   opts.prop = typeof opts.prop === 'string' ? opts.prop : 'plugins'
   opts.prop = opts.prop.length > 0 ? opts.prop : 'plugins'
@@ -25,11 +26,16 @@ module.exports = function useWare (app, opts) {
     if (typeof fn !== 'function') {
       throw new TypeError('app.use: expect `fn` be function')
     }
+
     var self = this || app
+    var params = utils.arrayify(opts.params)
+    params = params.length === 0 ? [self] : params
+
     if (typeof opts.fn === 'function') {
       opts.fn.call(self, self, options)
     }
-    fn = fn.call(self, self)
+
+    fn = fn.apply(self, params)
 
     if (typeof fn === 'function') {
       self[opts.prop].push(fn)

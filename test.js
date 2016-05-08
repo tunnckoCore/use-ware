@@ -231,3 +231,23 @@ test('should not extend options if `opts.fn` not given (#3)', function (done) {
 
   done()
 })
+
+test('should allow passing custom params to plugin function with `opts.params`', function (done) {
+  var app = {}
+  use(app, {
+    params: ['foo', { bar: 'qux' }]
+  })
+  app.use(function (str, obj) {
+    test.strictEqual(arguments.length, 2)
+    test.strictEqual(str, 'foo')
+    test.deepEqual(obj, { bar: 'qux' })
+  })
+  done()
+})
+
+test('should always add `app` (self) as first argument if not `opts.params` given', function (done) {
+  use({}).use(function (app) {
+    test.strictEqual(arguments.length, 1)
+  })
+  done()
+})
